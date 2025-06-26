@@ -13,11 +13,11 @@ echo $version | read major minor patch
 unset IFS
 
 commits=$(git log -p --oneline HEAD..origin/main)
-if [ echo $commits | grep -q '!|BREAKING' ];  then
+if [[ echo $commits | grep -q '!|BREAKING' ]];  then
     major+=1
-else if [ echo $commits | grep -q 'feat' ];  then
+else if [[ echo $commits | grep -q 'feat' ]];  then
     minor+=1
-else if [ echo $commits | grep -q 'fix' ];  then
+else if [[ echo $commits | grep -q 'fix' ]];  then
     patch+=1
 else
     exit 0
