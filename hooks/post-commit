@@ -8,22 +8,20 @@ fi
 tag=$(git describe --tags --abbrev=0)
 version=${tag:1} # truncate the starting `v`
 
-IFS=".$IFS" # add . separator
-echo $version | read major minor patch
-unset IFS
+IFS=. read -r major minor patch <<< "$version"
 
-commits=$(git log -p --oneline HEAD..origin/main)
+commits=$(git log -p --oneline origin/main..HEAD)
 if $(echo $commits | grep -q '!|BREAKING');  then
-    major+=1
+    major=$((major+1))
 elif $(echo $commits | grep -q 'feat');  then
-    minor+=1
+    minor=$((minor+1))
 elif $(echo $commits | grep -q 'fix');  then
-    patch+=1
+    patch=$((patch+1))
 else
     exit 0
 fi
 
-tag_next="v${major}.${minor}.${patch}"
+tag_next=$(printf "v%d.%d.%d" $major $minor $patch)
 
 echo "Creating tag $tag_next"
-git tag $tag_next
+git tag -m "$commits" $tag_next
