@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+if [ "$branch" != "main" ]; then
+  exit 0
+fi
+
+tag=$(git describe --tags --abbrev=0)
+version=${tag:1} # truncate the starting `v`
+
+IFS=".$IFS" # add . separator
+echo $version | read major minor patch
+unset IFS
+
+commits=$(git log -p --oneline HEAD..origin/main)
+if [ echo $commits | grep -q '!|BREAKING' ];  then
+    major+=1
+else if [ echo $commits | grep -q 'feat' ];  then
+    minor+=1
+else if [ echo $commits | grep -q 'fix' ];  then
+    patch+=1
+else
+    exit 0
+fi
+
+git tag "v${major}.${minor}.${patch}"

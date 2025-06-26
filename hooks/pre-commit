@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+if [ just -l | grep -q test ]; then
+    just test
+fi
