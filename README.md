@@ -11,7 +11,6 @@ graph TD
 	is-main{Are you pushing to main?}
 	tag(Generate SemVer tag)
 	push-complete(Push complete)
-	// release(Create GitHub Release)
 	complete[End]
 
 	commit --> checkmsg
@@ -21,7 +20,6 @@ graph TD
 	is-main -->|true| tag
 	tag --> push-complete
 	push-complete --> complete
-	// release --> complete
 	is-main -->|false| complete
 ```
 

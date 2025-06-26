@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
-if [[ just -l | grep -q test ]]; then
+if ! test -f justfile; then
+    echo 'justfile not present; skipping tests'
+    exit 0
+fi
+
+if $(just -l | grep -q test); then
     just test
 fi
