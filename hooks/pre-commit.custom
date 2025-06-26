@@ -9,4 +9,4 @@ if $(just -l | grep -q test); then
     just test
 fi
 
-source .git/hooks/pre-commit.custom
+source .git/hooks/commit-msg.custom

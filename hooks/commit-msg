@@ -5,3 +5,5 @@ if ! $(pcre2grep -q "$pattern" $1) ; then
     echo "The provided commit message doesn't follow Conventional Commits"
     exit 1
 fi
+
+source .git/hooks/commit-msg.custom

@@ -25,3 +25,5 @@ tag_next=$(printf "v%d.%d.%d" $major $minor $patch)
 
 echo "Creating tag $tag_next"
 git tag -m "$commits" $tag_next
+
+source .git/hooks/post-commit.custom
